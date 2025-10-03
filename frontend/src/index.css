@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CRITICAL FIX: Ensure nothing hides the particle background */
+body, #root {
+    background-color: transparent !important;
+}
+
+@layer components {
+    .text-gradient-primary {
+        @apply text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary;
+    }
+
+    .card-aurora {
+        position: relative;
+        overflow: hidden;
+    }
+    .card-aurora::before {
+        content: '';
+        position: absolute;
+        left: var(--x, 50%);
+        top: var(--y, 50%);
+        transform: translate(-50%, -50%);
+        width: 400px;
+        height: 400px;
+        background-image: radial-gradient(circle, rgba(0, 255, 255, 0.2) 0%, rgba(0, 255, 255, 0) 60%);
+        transition: width 0.4s, height 0.4s, background-image 0.4s;
+        pointer-events: none;
+        animation: pulse-aurora 4s infinite;
+    }
+    .card-aurora:hover::before {
+        width: 600px;
+        height: 600px;
+        background-image: radial-gradient(circle, rgba(138, 43, 226, 0.3) 0%, rgba(138, 43, 226, 0) 60%);
+    }
+}
+
+@keyframes pulse-aurora {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 1;
+    }
+}
+
+.skeleton-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+    50% {
+        opacity: .5;
+    }
+}
