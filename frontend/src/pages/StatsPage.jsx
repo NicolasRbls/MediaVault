@@ -24,11 +24,11 @@ const StatCard = ({ title, value, color }) => (
     </motion.div>
 );
 
-const CustomTooltip = ({ active, payload, label }) => {
+const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
         return (
             <div className="p-4 bg-neutral/80 backdrop-blur-md border border-white/10 rounded-lg">
-                <p className="label text-base-content">{`${label} : ${payload[0].value}`}</p>
+                <p className="label text-base-content">{`${payload[0].name} : ${payload[0].value}`}</p>
             </div>
         );
     }

@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import api from '../../services/api';
+import { ThemeContext } from '../../context/ThemeContext';
 
 const AddToCollectionModal = ({ isOpen, onClose, onAdd, mediaId }) => {
     const [collections, setCollections] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedCollection, setSelectedCollection] = useState('');
+    const { theme } = useContext(ThemeContext);
 
     useEffect(() => {
         if (isOpen) {
             setLoading(true);
-            // Fetch media with status 'owned'
             api.get('/collections')
                 .then(res => {
                     setCollections(res.data);
@@ -28,35 +29,42 @@ const AddToCollectionModal = ({ isOpen, onClose, onAdd, mediaId }) => {
         }
     };
 
-    if (!isOpen) return null;
-
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-            <div className="bg-dark-alt p-8 rounded-lg shadow-lg w-full max-w-md text-light">
-                <h2 className="text-2xl font-bold mb-6">Add to Collection</h2>
+        <dialog id="add_to_collection_modal" className={`modal ${isOpen ? 'modal-open' : ''}`}>
+            <div className="modal-box bg-neutral/70 backdrop-blur-xl border border-white/10">
+                <h3 className="font-bold text-2xl mb-6">Add to Collection</h3>
                 {loading ? (
-                    <p className="text-gray-text">Loading collections...</p>
+                    <div className="text-center"><span className="loading loading-spinner"></span></div>
                 ) : collections.length === 0 ? (
-                    <p className="text-gray-text">You don't have any collections yet. Create one from the Collections page.</p>
+                    <p className="text-base-content/70">You don't have any collections yet. Create one from the Collections page.</p>
                 ) : (
-                    <> 
+                    <div className="form-control w-full">
+                        <label className="label"><span className="label-text">Select a collection</span></label>
                         <select 
                             value={selectedCollection}
                             onChange={(e) => setSelectedCollection(e.target.value)}
-                            className="w-full bg-dark border border-gray-700 rounded-md py-2 px-3 mb-6 text-light"
+                            className={`select select-bordered w-full ${theme === 'light' ? 'bg-gray-600' : 'bg-base-200'}`}
                         >
                             {collections.map(c => (
-                                <option key={c.id} value={c.id}>{c.name}</option>
+                                <option 
+                                    key={c.id} 
+                                    value={c.id}
+                                >
+                                    {c.name}
+                                </option>
                             ))}
                         </select>
-                        <div className="flex justify-end space-x-4">
-                            <button type="button" onClick={onClose} className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-md">Cancel</button>
-                            <button onClick={handleAdd} className="bg-primary hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md">Add</button>
-                        </div>
-                    </>
+                    </div>
                 )}
+                <div className="modal-action mt-6">
+                    <button type="button" onClick={onClose} className="btn btn-ghost">Cancel</button>
+                    <button onClick={handleAdd} disabled={loading || collections.length === 0} className="btn btn-primary">Add</button>
+                </div>
             </div>
-        </div>
+            <form method="dialog" className="modal-backdrop">
+                <button onClick={onClose}>close</button>
+            </form>
+        </dialog>
     );
 };
 

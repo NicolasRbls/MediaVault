@@ -32,7 +32,11 @@ const LibraryPage = () => {
 
     const handleSaveMedia = async (formData, tagNames) => {
         try {
-            const res = await api.post('/media', formData);
+            const res = await api.post('/media', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
             const newMedia = res.data;
             if (tagNames.length > 0) {
                 await api.post(`/media/${newMedia.id}/tags`, { tagNames });

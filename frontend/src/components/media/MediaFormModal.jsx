@@ -7,12 +7,12 @@ const MediaFormModal = ({ isOpen, onClose, onSave, mediaItem }) => {
         type: 'book',
         author_creator: '',
         description: '',
-        cover_image: '',
         release_year: '',
         isbn_code: '',
         status: 'owned',
         acquisition_date: '',
     });
+    const [coverImageFile, setCoverImageFile] = useState(null);
     const [tags, setTags] = useState('');
 
     useEffect(() => {
@@ -22,17 +22,18 @@ const MediaFormModal = ({ isOpen, onClose, onSave, mediaItem }) => {
                 type: mediaItem.type || 'book',
                 author_creator: mediaItem.author_creator || '',
                 description: mediaItem.description || '',
-                cover_image: mediaItem.cover_image || '',
                 release_year: mediaItem.release_year || '',
                 isbn_code: mediaItem.isbn_code || '',
                 status: mediaItem.status || 'owned',
                 acquisition_date: mediaItem.acquisition_date ? new Date(mediaItem.acquisition_date).toISOString().split('T')[0] : '',
             });
+            setCoverImageFile(null);
             api.get(`/media/${mediaItem.id}/tags`).then(res => {
                 setTags(res.data.map(t => t.name).join(', '));
             });
         } else {
-            setFormData({ title: '', type: 'book', author_creator: '', description: '', cover_image: '', release_year: '', isbn_code: '', status: 'owned', acquisition_date: '' });
+            setFormData({ title: '', type: 'book', author_creator: '', description: '', release_year: '', isbn_code: '', status: 'owned', acquisition_date: '' });
+            setCoverImageFile(null);
             setTags('');
         }
     }, [mediaItem, isOpen]);
@@ -42,10 +43,24 @@ const MediaFormModal = ({ isOpen, onClose, onSave, mediaItem }) => {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
+    const handleFileChange = (e) => {
+        setCoverImageFile(e.target.files[0]);
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        const submissionData = new FormData();
+        
+        Object.keys(formData).forEach(key => {
+            submissionData.append(key, formData[key]);
+        });
+
+        if (coverImageFile) {
+            submissionData.append('cover_image', coverImageFile);
+        }
+
         const tagNames = tags.split(',').map(t => t.trim()).filter(Boolean);
-        onSave(formData, tagNames);
+        onSave(submissionData, tagNames);
     };
 
     return (
@@ -82,8 +97,8 @@ const MediaFormModal = ({ isOpen, onClose, onSave, mediaItem }) => {
                             <input type="text" name="isbn_code" value={formData.isbn_code} onChange={handleChange} className="input input-bordered bg-base-100/50" />
                         </div>
                         <div className="form-control">
-                            <label className="label"><span className="label-text text-white/70">Cover Image URL</span></label>
-                            <input type="text" name="cover_image" value={formData.cover_image} onChange={handleChange} className="input input-bordered bg-base-100/50" />
+                            <label className="label"><span className="label-text text-white/70">Cover Image</span></label>
+                            <input type="file" name="cover_image" onChange={handleFileChange} className="file-input file-input-bordered bg-base-100/50 w-full" />
                         </div>
                         <div className="form-control">
                             <label className="label"><span className="label-text text-white/70">Acquisition Date</span></label>
