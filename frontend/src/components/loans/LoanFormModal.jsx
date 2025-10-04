@@ -38,46 +38,47 @@ const LoanFormModal = ({ isOpen, onClose, onSave }) => {
         onSave(formData);
     };
 
-    if (!isOpen) return null;
-
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-            <div className="bg-dark-alt p-8 rounded-lg shadow-lg w-full max-w-lg text-light">
-                <h2 className="text-2xl font-bold mb-6">Lend an Item</h2>
-                {loading ? <p className="text-gray-text">Loading your media...</p> : (
+        <dialog id="loan_form_modal" className={`modal ${isOpen ? 'modal-open' : ''}`}>
+            <div className="modal-box w-11/12 max-w-lg bg-neutral/70 backdrop-blur-xl border border-white/10">
+                <h3 className="font-bold text-2xl mb-6">Lend an Item</h3>
+                {loading ? <div className="text-center"><span className="loading loading-spinner"></span></div> : (
                     <form onSubmit={handleSubmit}>
-                        <div className="mb-4">
-                            <label className="block text-gray-text mb-2">Item to Lend*</label>
-                            <select name="media_id" value={formData.media_id} onChange={handleChange} className="w-full bg-dark border border-gray-700 rounded-md py-2 px-3 text-light" required>
+                        <div className="form-control w-full mb-4">
+                            <label className="label"><span className="label-text">Item to Lend*</span></label>
+                            <select name="media_id" value={formData.media_id} onChange={handleChange} className="select select-bordered w-full bg-base-200" required>
                                 {ownedMedia.map(item => (
                                     <option key={item.id} value={item.id}>{item.title}</option>
                                 ))}
                             </select>
                         </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-text mb-2">Lent To (Name)*</label>
-                            <input type="text" name="borrower_name" value={formData.borrower_name} onChange={handleChange} className="w-full bg-dark border border-gray-700 rounded-md py-2 px-3 text-light" required />
+                        <div className="form-control w-full mb-4">
+                            <label className="label"><span className="label-text">Lent To (Name)*</span></label>
+                            <input type="text" name="borrower_name" value={formData.borrower_name} onChange={handleChange} className="input input-bordered w-full bg-base-200" required />
                         </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-text mb-2">Loan Date*</label>
-                            <input type="date" name="loan_date" value={formData.loan_date} onChange={handleChange} className="w-full bg-dark border border-gray-700 rounded-md py-2 px-3 text-light" required />
+                        <div className="form-control w-full mb-4">
+                            <label className="label"><span className="label-text">Loan Date*</span></label>
+                            <input type="date" name="loan_date" value={formData.loan_date} onChange={handleChange} className="input input-bordered w-full bg-base-200" required />
                         </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-text mb-2">Expected Return Date</label>
-                            <input type="date" name="expected_return_date" value={formData.expected_return_date} onChange={handleChange} className="w-full bg-dark border border-gray-700 rounded-md py-2 px-3 text-light" />
+                        <div className="form-control w-full mb-4">
+                            <label className="label"><span className="label-text">Expected Return Date</span></label>
+                            <input type="date" name="expected_return_date" value={formData.expected_return_date} onChange={handleChange} className="input input-bordered w-full bg-base-200" />
                         </div>
-                        <div className="mb-6">
-                            <label className="block text-gray-text mb-2">Notes</label>
-                            <textarea name="notes" value={formData.notes} onChange={handleChange} rows="3" className="w-full bg-dark border border-gray-700 rounded-md py-2 px-3 text-light"></textarea>
+                        <div className="form-control w-full mb-6">
+                            <label className="label"><span className="label-text">Notes</span></label>
+                            <textarea name="notes" value={formData.notes} onChange={handleChange} rows="3" className="textarea textarea-bordered w-full bg-base-200"></textarea>
                         </div>
-                        <div className="flex justify-end space-x-4">
-                            <button type="button" onClick={onClose} className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-md">Cancel</button>
-                            <button type="submit" className="bg-primary hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md">Save Loan</button>
+                        <div className="modal-action mt-6">
+                            <button type="button" onClick={onClose} className="btn btn-ghost">Cancel</button>
+                            <button type="submit" className="btn btn-primary">Save Loan</button>
                         </div>
                     </form>
                 )}
             </div>
-        </div>
+            <form method="dialog" className="modal-backdrop">
+                <button onClick={onClose}>close</button>
+            </form>
+        </dialog>
     );
 };
 

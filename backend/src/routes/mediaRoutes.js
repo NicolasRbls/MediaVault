@@ -8,6 +8,7 @@ const {
     deleteMedia
 } = require('../controllers/mediaController');
 const authMiddleware = require('../middleware/auth');
+const upload = require('../middleware/upload');
 
 // Import nested routes
 const mediaTagRoutes = require('./mediaTagRoutes');
@@ -24,11 +25,11 @@ router.use('/:id/progress', progressRoutes);
 
 router.route('/')
     .get(getAllMedia)
-    .post(createMedia);
+    .post(upload.single('cover_image'), createMedia);
 
 router.route('/:id')
     .get(getMediaById)
-    .put(updateMedia)
+    .put(upload.single('cover_image'), updateMedia)
     .delete(deleteMedia);
 
 module.exports = router;

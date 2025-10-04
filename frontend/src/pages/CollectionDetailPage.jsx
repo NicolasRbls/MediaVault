@@ -4,10 +4,12 @@ import api from '../services/api';
 import MediaCard from '../components/media/MediaCard';
 import SkeletonCard from '../components/common/SkeletonCard';
 import { useToast } from '../context/ToastContext';
+import { useTranslation } from 'react-i18next';
 
 const CollectionDetailPage = () => {
     const { id } = useParams();
     const { addToast } = useToast();
+    const { t } = useTranslation();
     const [collection, setCollection] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -70,9 +72,9 @@ const CollectionDetailPage = () => {
 
             {collection.items.length === 0 ? (
                 <div className="text-center bg-dark-alt p-12 rounded-lg shadow-md">
-                    <h2 className="text-2xl font-bold">This collection is empty!</h2>
-                    <p className="text-gray-text mt-2">You can add items from the library.</p>
-                    <Link to="/library" className="mt-4 inline-block bg-primary hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md">Go to Library</Link>
+                    <h2 className="text-2xl font-bold">{t('collection_is_empty')}</h2>
+                    <p className="text-gray-text mt-2">{t('add_items_from_library')}</p>
+                    <Link to="/library" className="mt-4 inline-block bg-primary hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md">{t('go_to_library')}</Link>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">

@@ -1,11 +1,12 @@
 const db = require('../config/database');
+const path = require('path');
 
 // @desc    Get all media for a user
 // @route   GET /api/media
 // @access  Private
 const getAllMedia = (req, res) => {
     const userId = req.user.id;
-    const { status, type } = req.query;
+    const { status, type, limit } = req.query;
 
     let sql = 'SELECT * FROM media WHERE user_id = ?';
     const params = [userId];
@@ -21,6 +22,11 @@ const getAllMedia = (req, res) => {
     }
 
     sql += ' ORDER BY created_at DESC';
+
+    if (limit) {
+        sql += ' LIMIT ?';
+        params.push(parseInt(limit, 10));
+    }
 
     db.all(sql, params, (err, rows) => {
         if (err) {
@@ -61,16 +67,18 @@ const createMedia = (req, res) => {
         return res.status(400).json({ message: 'Title and type are required' });
     }
 
-    const sql = `INSERT INTO media (user_id, title, type, author_creator, description, release_year, isbn_code, status, acquisition_date, updated_at)
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)`;
+    const cover_image = req.file ? path.join('/uploads', req.file.filename) : null;
 
-    const params = [userId, title, type, author_creator, description, release_year, isbn_code, status, acquisition_date];
+    const sql = `INSERT INTO media (user_id, title, type, author_creator, description, cover_image, release_year, isbn_code, status, acquisition_date, updated_at)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)`;
+
+    const params = [userId, title, type, author_creator, description, cover_image, release_year, isbn_code, status, acquisition_date];
 
     db.run(sql, params, function(err) {
         if (err) {
             return res.status(500).json({ message: 'Database error', error: err.message });
         }
-        res.status(201).json({ id: this.lastID, ...req.body });
+        res.status(201).json({ id: this.lastID, cover_image, ...req.body });
     });
 };
 
@@ -84,28 +92,46 @@ const updateMedia = (req, res) => {
         title, type, author_creator, description, release_year, isbn_code, status, acquisition_date
     } = req.body;
 
-    const sql = `UPDATE media SET
-                    title = ?,
-                    type = ?,
-                    author_creator = ?,
-                    description = ?,
-                    release_year = ?,
-                    isbn_code = ?,
-                    status = ?,
-                    acquisition_date = ?,
-                    updated_at = CURRENT_TIMESTAMP
-                 WHERE id = ? AND user_id = ?`;
-
-    const params = [title, type, author_creator, description, release_year, isbn_code, status, acquisition_date, id, userId];
-
-    db.run(sql, params, function(err) {
+    // First, get the existing media item to check for an old image
+    db.get('SELECT cover_image FROM media WHERE id = ? AND user_id = ?', [id, userId], (err, row) => {
         if (err) {
             return res.status(500).json({ message: 'Database error', error: err.message });
         }
-        if (this.changes === 0) {
+        if (!row) {
             return res.status(404).json({ message: 'Media not found or user not authorized' });
         }
-        res.json({ message: 'Media updated successfully' });
+
+        let cover_image = row.cover_image;
+        if (req.file) {
+            // TODO: Optionally delete the old image from the filesystem `row.cover_image`
+            cover_image = path.join('/uploads', req.file.filename);
+        }
+
+        const sql = `UPDATE media SET
+                        title = ?,
+                        type = ?,
+                        author_creator = ?,
+                        description = ?,
+                        release_year = ?,
+                        isbn_code = ?,
+                        status = ?,
+                        acquisition_date = ?,
+                        cover_image = ?,
+                        updated_at = CURRENT_TIMESTAMP
+                     WHERE id = ? AND user_id = ?`;
+
+        const params = [title, type, author_creator, description, release_year, isbn_code, status, acquisition_date, cover_image, id, userId];
+
+        db.run(sql, params, function(err) {
+            if (err) {
+                return res.status(500).json({ message: 'Database error', error: err.message });
+            }
+            if (this.changes === 0) {
+                // This case should ideally not be hit due to the check above, but as a fallback
+                return res.status(404).json({ message: 'Media not found or user not authorized' });
+            }
+            res.json({ message: 'Media updated successfully', cover_image });
+        });
     });
 };
 
@@ -115,6 +141,7 @@ const updateMedia = (req, res) => {
 const deleteMedia = (req, res) => {
     const { id } = req.params;
     const userId = req.user.id;
+    // TODO: Optionally delete the image from the filesystem
 
     db.run('DELETE FROM media WHERE id = ? AND user_id = ?', [id, userId], function(err) {
         if (err) {

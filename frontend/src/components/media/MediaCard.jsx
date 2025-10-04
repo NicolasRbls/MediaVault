@@ -1,12 +1,17 @@
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
+
+const API_URL = 'http://localhost:5000';
 
 const MediaCard = ({ media }) => {
     const { id, title, author_creator, cover_image, type } = media;
     const cardRef = useRef(null);
+    const { t } = useTranslation();
 
     const placeholderImage = `https://via.placeholder.com/300x450/0D0D1A/8A2BE2?text=${encodeURIComponent(title)}`;
+    const imageUrl = cover_image ? `${API_URL}${cover_image}` : placeholderImage;
 
     const handleMouseMove = (e) => {
         const rect = cardRef.current.getBoundingClientRect();
@@ -27,9 +32,10 @@ const MediaCard = ({ media }) => {
                 <figure>
                     <motion.img 
                         layoutId={`card-image-${id}`}
-                        src={cover_image || placeholderImage} 
+                        src={imageUrl} 
                         alt={`Cover for ${title}`}
                         className="w-full h-72 object-cover"
+                        onError={(e) => { e.target.onerror = null; e.target.src = placeholderImage; }}
                     />
                 </figure>
                 <div className="card-body p-4">
@@ -38,7 +44,7 @@ const MediaCard = ({ media }) => {
                     </h2>
                     <p className="text-sm text-base-content/60 truncate" title={author_creator}>{author_creator}</p>
                     <div className="card-actions justify-end">
-                        <div className="badge badge-secondary badge-outline">{type}</div>
+                        <div className="badge badge-secondary badge-outline">{t(type)}</div>
                     </div>
                 </div>
             </Link>

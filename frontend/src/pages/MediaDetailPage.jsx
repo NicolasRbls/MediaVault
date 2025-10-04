@@ -9,11 +9,13 @@ import ProgressTracker from '../components/media/ProgressTracker';
 import { useToast } from '../context/ToastContext';
 import { FiEdit, FiTrash2, FiPlusSquare } from 'react-icons/fi';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const MediaDetailPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const { addToast } = useToast();
+    const { t } = useTranslation();
     const [media, setMedia] = useState(null);
     const [tags, setTags] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -82,43 +84,46 @@ const MediaDetailPage = () => {
     if (!media) return null;
 
     const placeholderImage = `https://via.placeholder.com/400x600/0D0D1A/8A2BE2?text=${encodeURIComponent(media.title)}`;
+    const API_URL = 'http://localhost:5000';
+    const imageUrl = media.cover_image ? `${API_URL}${media.cover_image}` : placeholderImage;
 
     return (
-        <div className="p-4 text-white">
+        <div className="p-4 text-base-content">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {/* Left Column: Cover Image and Actions */}
                 <motion.div layoutId={`card-container-${id}`} className="md:col-span-1 flex flex-col items-center">
                     <motion.img 
                         layoutId={`card-image-${id}`}
-                        src={media.cover_image || placeholderImage} 
+                        src={imageUrl} 
                         alt={`Cover for ${media.title}`}
                         className="w-full max-w-sm rounded-lg shadow-2xl border-2 border-white/10 object-cover"
+                        onError={(e) => { e.target.onerror = null; e.target.src = placeholderImage; }}
                     />
                     <div className="mt-6 flex flex-wrap justify-center gap-4">
-                        <button onClick={() => setIsEditModalOpen(true)} className="btn btn-primary btn-outline gap-2"><FiEdit /> Edit</button>
-                        <button onClick={() => setIsAddToCollectionModalOpen(true)} className="btn btn-secondary btn-outline gap-2"><FiPlusSquare /> Add to Collection</button>
-                        <button onClick={handleDelete} className="btn btn-error btn-outline gap-2"><FiTrash2 /> Delete</button>
+                        <button onClick={() => setIsEditModalOpen(true)} className="btn btn-primary btn-outline gap-2"><FiEdit /> {t('edit')}</button>
+                        <button onClick={() => setIsAddToCollectionModalOpen(true)} className="btn btn-secondary btn-outline gap-2"><FiPlusSquare /> {t('add_to_collection')}</button>
+                        <button onClick={handleDelete} className="btn btn-error btn-outline gap-2"><FiTrash2 /> {t('delete')}</button>
                     </div>
                 </motion.div>
 
                 {/* Right Column: Details */}
                 <div className="md:col-span-2">
                     <h1 className="text-5xl font-extrabold mb-2" style={{ textShadow: '0 0 10px var(--tw-shadow-color, #8A2BE2)' }}>{media.title}</h1>
-                    <p className="text-2xl text-white/70 mb-4">{media.author_creator}</p>
+                    <p className="text-2xl text-base-content/70 mb-4">{media.author_creator}</p>
                     
                     <div className="flex items-center flex-wrap gap-4 mb-6">
-                        <div className="badge badge-primary badge-lg capitalize">{media.type}</div>
-                        <div className="badge badge-secondary badge-lg capitalize">{media.status}</div>
+                        <div className="badge badge-primary badge-lg capitalize">{t(media.type)}</div>
+                        <div className="badge badge-secondary badge-lg capitalize">{t(media.status)}</div>
                         {media.release_year && <div className="badge badge-accent badge-lg">{media.release_year}</div>}
                     </div>
 
                     <div className="p-6 bg-neutral/50 backdrop-blur-lg rounded-lg border border-white/10 mb-6">
-                        <h3 className="text-xl font-bold mb-2">Description</h3>
-                        <p className="text-white/80 leading-relaxed">{media.description || "No description available."}</p>
+                        <h3 className="text-xl font-bold mb-2">{t('description')}</h3>
+                        <p className="text-base-content/80 leading-relaxed">{media.description || t('no_description_available')}</p>
                     </div>
 
                     <div className="p-6 bg-neutral/50 backdrop-blur-lg rounded-lg border border-white/10 mb-6">
-                        <h3 className="text-xl font-bold mb-2">Tags</h3>
+                        <h3 className="text-xl font-bold mb-2">{t('tags')}</h3>
                         <TagList tags={tags} />
                     </div>
                 </div>
