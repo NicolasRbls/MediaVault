@@ -5,7 +5,14 @@
 [![React](https://img.shields.io/badge/React-18.x-cyan.svg)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-5.x-purple.svg)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.x-blueviolet.svg)](https://tailwindcss.com/)
+[![DaisyUI](https://img.shields.io/badge/daisyUI-3.x-1f2937.svg)](https://daisyui.com/)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-10.x-purple.svg)](https://www.framer.com/motion/)
+[![React Router](https://img.shields.io/badge/React_Router-6.x-red.svg)](https://reactrouter.com/)
+[![Axios](https://img.shields.io/badge/Axios-1.x-purple.svg)](https://axios-http.com/)
+[![Recharts](https://img.shields.io/badge/Recharts-2.x-blue.svg)](https://recharts.org/)
 [![SQLite](https://img.shields.io/badge/SQLite-3-blue.svg)](https://www.sqlite.org/index.html)
+[![JWT](https://img.shields.io/badge/JWT-black?logo=jsonwebtokens)](https://jwt.io/)
+[![i18next](https://img.shields.io/badge/i18next-react-blue.svg)](https://react.i18next.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 MediaVault est une application web full-stack conçue pour être votre bibliothèque numérique personnelle. Elle vous permet de cataloguer, gérer et suivre méticuleusement l'ensemble de votre collection de médias.
@@ -60,7 +67,7 @@ MediaVault a été créé pour fournir une solution unique et élégante pour la
 ### Stack Technique
 
 - **Backend**: Node.js, Express.js, SQLite, JWT
-- **Frontend**: React, Vite, Tailwind CSS, DaisyUI, React Router, Axios, Recharts
+- **Frontend**: React, Vite, Tailwind CSS, DaisyUI, React Router, Axios, Recharts, i18next, Framer Motion
 
 ---
 
@@ -75,6 +82,7 @@ MediaVault a été créé pour fournir une solution unique et élégante pour la
 -   📊 **Suivi de Progression**: Surveillez votre progression pour les livres (par page) et les séries (par épisode).
 -   📈 **Tableau de Bord Statistique**: Visualisez votre bibliothèque avec des graphiques.
 -   🎨 **Thème Double**: Une interface utilisateur réactive avec des modes Clair et Sombre personnalisés.
+-   🌐 **Localisation**: Prise en charge multilingue (français, anglais, espagnol, allemand, chinois). Le système de traduction est entièrement modulable, ce qui facilite l'ajout de nouvelles langues.
 
 ---
 
@@ -95,7 +103,8 @@ MediaVault a été créé pour fournir une solution unique et élégante pour la
     │   ├── components/   # Composants React réutilisables
     │   ├── context/      # État global (Auth, Theme)
     │   ├── pages/        # Composants de page principaux
-    │   └── services/     # Couche de communication API
+    │   ├── services/     # Couche de communication API
+    │   └── locales/      # Fichiers de traduction
     └── main.jsx        # Point d'entrée principal de React
 ```
 

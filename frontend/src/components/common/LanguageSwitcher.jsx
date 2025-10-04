@@ -17,6 +17,9 @@ const LanguageSwitcher = () => {
       <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100/80 backdrop-blur-lg rounded-box w-52">
         <li><button onClick={() => changeLanguage('en')}>English</button></li>
         <li><button onClick={() => changeLanguage('fr')}>Français</button></li>
+        <li><button onClick={() => changeLanguage('es')}>Español</button></li>
+        <li><button onClick={() => changeLanguage('de')}>Deutsch</button></li>
+        <li><button onClick={() => changeLanguage('zh')}>中文</button></li>
       </ul>
     </div>
   );

@@ -45,7 +45,7 @@ const AddToCollectionModal = ({ isOpen, onClose, onAdd, mediaId }) => {
                         <select 
                             value={selectedCollection}
                             onChange={(e) => setSelectedCollection(e.target.value)}
-                            className={`select select-bordered w-full ${theme === 'light' ? 'bg-gray-600' : 'bg-base-200'}`}
+                            className="select select-bordered w-full bg-base-200"
                         >
                             {collections.map(c => (
                                 <option 
