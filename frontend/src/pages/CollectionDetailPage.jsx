@@ -1,41 +1,47 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import api from '../services/api';
 import MediaCard from '../components/media/MediaCard';
 import SkeletonCard from '../components/common/SkeletonCard';
 import { useToast } from '../context/ToastContext';
 import { useTranslation } from 'react-i18next';
+import AuthContext from '../context/AuthContext';
 
 const CollectionDetailPage = () => {
     const { id } = useParams();
     const { addToast } = useToast();
     const { t } = useTranslation();
+    const { user } = useContext(AuthContext);
     const [collection, setCollection] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const fetchCollection = async () => {
-        try {
-            setLoading(true);
-            const res = await api.get(`/collections/${id}`);
-            setCollection(res.data);
-        } catch (err) {
-            setError('Could not fetch collection details.');
-            addToast('Could not fetch collection details.', 'error');
-        }
-        setLoading(false);
-    };
-
     useEffect(() => {
-        fetchCollection();
-    }, [id]);
+        const fetchCollection = async () => {
+            try {
+                setLoading(true);
+                const res = await api.get(`/collections/${id}`);
+                setCollection(res.data);
+            } catch (err) {
+                setError('Could not fetch collection details.');
+                addToast('Could not fetch collection details.', 'error');
+            }
+            setLoading(false);
+        };
+
+        if (user && id) {
+            fetchCollection();
+        }
+    }, [id, user]);
 
     const handleRemoveItem = async (mediaId) => {
         if (window.confirm('Are you sure you want to remove this item from the collection?')) {
             try {
                 await api.delete(`/collections/${id}/media/${mediaId}`);
                 addToast('Item removed from collection!', 'success');
-                fetchCollection(); // Refresh the list
+                // Refresh the list
+                const res = await api.get(`/collections/${id}`);
+                setCollection(res.data);
             } catch (err) {
                 addToast('Failed to remove item from collection.', 'error');
             }

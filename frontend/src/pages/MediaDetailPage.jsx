@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import MediaFormModal from '../components/media/MediaFormModal';
@@ -10,12 +10,14 @@ import { useToast } from '../context/ToastContext';
 import { FiEdit, FiTrash2, FiPlusSquare } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import AuthContext from '../context/AuthContext';
 
 const MediaDetailPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const { addToast } = useToast();
     const { t } = useTranslation();
+    const { user } = useContext(AuthContext);
     const [media, setMedia] = useState(null);
     const [tags, setTags] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -40,8 +42,10 @@ const MediaDetailPage = () => {
     };
 
     useEffect(() => {
-        fetchMediaAndTags();
-    }, [id]);
+        if (user && id) {
+            fetchMediaAndTags();
+        }
+    }, [id, user]);
 
     const handleUpdate = async (formData, tagNames) => {
         try {
