@@ -64,7 +64,8 @@ const login = (req, res) => {
         // Create JWT Payload
         const payload = {
             id: user.id,
-            username: user.username
+            username: user.username,
+            role: user.role
         };
 
         // Sign token
@@ -79,7 +80,8 @@ const login = (req, res) => {
                     user: {
                         id: user.id,
                         username: user.username,
-                        email: user.email
+                        email: user.email,
+                        role: user.role
                     }
                 });
             }
@@ -92,7 +94,7 @@ const login = (req, res) => {
 // @access  Private
 const getProfile = (req, res) => {
     // The user object is attached to the request in the auth middleware
-    db.get('SELECT id, username, email, created_at FROM users WHERE id = ?', [req.user.id], (err, user) => {
+    db.get('SELECT id, username, email, role, created_at FROM users WHERE id = ?', [req.user.id], (err, user) => {
         if (err) {
             return res.status(500).json({ message: 'Database error', error: err.message });
         }

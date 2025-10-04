@@ -93,5 +93,23 @@
   "acquisition_date": "Acquisition Date",
   "status": "Status",
   "tags_comma_separated": "Tags (comma-separated)",
-  "save": "Save"
+  "save": "Save",
+  "collectionForm": {
+    "createTitle": "Create New Collection",
+    "editTitle": "Edit Collection",
+    "name": "Name",
+    "description": "Description",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
+  "loanForm": {
+    "title": "Lend an Item",
+    "itemToLend": "Item to Lend",
+    "lentTo": "Lent To (Name)",
+    "loanDate": "Loan Date",
+    "returnDate": "Expected Return Date",
+    "notes": "Notes",
+    "cancel": "Cancel",
+    "save": "Save Loan"
+  }
 }

@@ -13,6 +13,7 @@ const tagRoutes = require('./routes/tagRoutes');
 const collectionRoutes = require('./routes/collectionRoutes');
 const loanRoutes = require('./routes/loanRoutes');
 const statsRoutes = require('./routes/statsRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use('/api/tags', tagRoutes);
 app.use('/api/collections', collectionRoutes);
 app.use('/api/loans', loanRoutes);
 app.use('/api/stats', statsRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Default route
 app.get('/', (req, res) => {

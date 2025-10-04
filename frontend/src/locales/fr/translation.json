@@ -93,5 +93,23 @@
   "acquisition_date": "Date d'acquisition",
   "status": "Statut",
   "tags_comma_separated": "Tags (séparés par des virgules)",
-  "save": "Enregistrer"
+  "save": "Enregistrer",
+  "collectionForm": {
+    "createTitle": "Créer une nouvelle collection",
+    "editTitle": "Modifier la collection",
+    "name": "Nom",
+    "description": "Description",
+    "cancel": "Annuler",
+    "save": "Enregistrer"
+  },
+  "loanForm": {
+    "title": "Prêter un article",
+    "itemToLend": "Article à prêter",
+    "lentTo": "Prêté à (Nom)",
+    "loanDate": "Date du prêt",
+    "returnDate": "Date de retour prévue",
+    "notes": "Notes",
+    "cancel": "Annuler",
+    "save": "Enregistrer le prêt"
+  }
 }

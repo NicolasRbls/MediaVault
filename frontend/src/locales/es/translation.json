@@ -93,5 +93,23 @@
   "acquisition_date": "Fecha de adquisición",
   "status": "Estado",
   "tags_comma_separated": "Etiquetas (separadas por comas)",
-  "save": "Guardar"
+  "save": "Guardar",
+  "collectionForm": {
+    "createTitle": "Crear nueva colección",
+    "editTitle": "Editar colección",
+    "name": "Nombre",
+    "description": "Descripción",
+    "cancel": "Cancelar",
+    "save": "Guardar"
+  },
+  "loanForm": {
+    "title": "Prestar un artículo",
+    "itemToLend": "Artículo a prestar",
+    "lentTo": "Prestado a (Nombre)",
+    "loanDate": "Fecha del préstamo",
+    "returnDate": "Fecha de devolución prevista",
+    "notes": "Notas",
+    "cancel": "Cancelar",
+    "save": "Guardar préstamo"
+  }
 }

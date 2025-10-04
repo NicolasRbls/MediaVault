@@ -29,3 +29,7 @@ pnpm-debug.log*
 # OS generated files
 .DS_Store
 Thumbs.db
+
+# User uploaded content
+/backend/uploads/*
+!/backend/uploads/.gitkeep

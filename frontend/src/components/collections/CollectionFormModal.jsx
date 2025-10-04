@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const CollectionFormModal = ({ isOpen, onClose, onSave, collection }) => {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         name: '',
         description: '',
     });
 
     useEffect(() => {
-        if (collection) {
-            setFormData(collection);
-        } else {
-            setFormData({ name: '', description: '' });
+        if (isOpen) {
+            if (collection) {
+                setFormData(collection);
+            } else {
+                setFormData({ name: '', description: '' });
+            }
         }
-    }, [collection]);
+    }, [collection, isOpen]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -24,41 +28,47 @@ const CollectionFormModal = ({ isOpen, onClose, onSave, collection }) => {
         onSave(formData);
     };
 
-    if (!isOpen) return null;
-
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-            <div className="bg-dark-alt p-8 rounded-lg shadow-lg w-full max-w-lg text-light">
-                <h2 className="text-2xl font-bold mb-6">{collection ? 'Edit Collection' : 'Create New Collection'}</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-4">
-                        <label className="block text-gray-text mb-2">Name*</label>
+        <dialog id="collection_form_modal" className={`modal ${isOpen ? 'modal-open' : ''}`}>
+            <div className="modal-box">
+                <h3 className="font-bold text-lg">{collection ? t('collectionForm.editTitle') : t('collectionForm.createTitle')}</h3>
+                
+                <form onSubmit={handleSubmit} className="py-4">
+                    <div className="form-control w-full mb-4">
+                        <label className="label">
+                            <span className="label-text">{t('collectionForm.name')}*</span>
+                        </label>
                         <input 
                             type="text" 
                             name="name" 
                             value={formData.name}
                             onChange={handleChange}
-                            className="w-full bg-dark border border-gray-700 rounded-md py-2 px-3" 
+                            className="input input-bordered w-full" 
                             required 
                         />
                     </div>
-                    <div className="mb-6">
-                        <label className="block text-gray-text mb-2">Description</label>
+                    <div className="form-control w-full mb-6">
+                        <label className="label">
+                            <span className="label-text">{t('collectionForm.description')}</span>
+                        </label>
                         <textarea 
                             name="description" 
                             value={formData.description}
                             onChange={handleChange}
                             rows="4" 
-                            className="w-full bg-dark border border-gray-700 rounded-md py-2 px-3"
+                            className="textarea textarea-bordered w-full"
                         ></textarea>
                     </div>
-                    <div className="flex justify-end space-x-4">
-                        <button type="button" onClick={onClose} className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-md">Cancel</button>
-                        <button type="submit" className="bg-primary hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md">Save</button>
+                    <div className="modal-action">
+                        <button type="button" onClick={onClose} className="btn btn-ghost">{t('collectionForm.cancel')}</button>
+                        <button type="submit" className="btn btn-primary">{t('collectionForm.save')}</button>
                     </div>
                 </form>
             </div>
-        </div>
+            <form method="dialog" className="modal-backdrop">
+                <button onClick={onClose}>close</button>
+            </form>
+        </dialog>
     );
 };
 

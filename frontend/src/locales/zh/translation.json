@@ -93,5 +93,23 @@
   "acquisition_date": "购置日期",
   "status": "状态",
   "tags_comma_separated": "标签（以逗号分隔）",
-  "save": "保存"
+  "save": "保存",
+  "collectionForm": {
+    "createTitle": "创建新收藏",
+    "editTitle": "编辑收藏",
+    "name": "名称",
+    "description": "描述",
+    "cancel": "取消",
+    "save": "保存"
+  },
+  "loanForm": {
+    "title": "出借物品",
+    "itemToLend": "要出借的物品",
+    "lentTo": "借给（姓名）",
+    "loanDate": "借出日期",
+    "returnDate": "预计归还日期",
+    "notes": "笔记",
+    "cancel": "取消",
+    "save": "保存借出记录"
+  }
 }

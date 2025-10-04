@@ -93,5 +93,23 @@
   "acquisition_date": "Erwerbsdatum",
   "status": "Status",
   "tags_comma_separated": "Etiketten (durch Komma getrennt)",
-  "save": "Speichern"
+  "save": "Speichern",
+  "collectionForm": {
+    "createTitle": "Neue Sammlung erstellen",
+    "editTitle": "Sammlung bearbeiten",
+    "name": "Name",
+    "description": "Beschreibung",
+    "cancel": "Abbrechen",
+    "save": "Speichern"
+  },
+  "loanForm": {
+    "title": "Einen Artikel verleihen",
+    "itemToLend": "Zu verleihender Artikel",
+    "lentTo": "Verliehen an (Name)",
+    "loanDate": "Datum des Verleihs",
+    "returnDate": "Erwartetes Rückgabedatum",
+    "notes": "Notizen",
+    "cancel": "Abbrechen",
+    "save": "Leihvorgang speichern"
+  }
 }
