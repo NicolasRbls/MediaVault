@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 // Using the colors from our custom theme
 const THEME_COLORS = {
@@ -38,6 +39,7 @@ const CustomTooltip = ({ active, payload }) => {
 const StatsPage = () => {
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
+    const { t } = useTranslation();
 
     useEffect(() => {
         api.get('/stats/overview')
@@ -49,11 +51,11 @@ const StatsPage = () => {
     if (loading) return <div className="text-center p-8"><span className="loading loading-spinner loading-lg"></span></div>;
     if (!stats) return <div className="text-center p-8 text-error">Could not load stats.</div>;
 
-    const pieData = stats ? Object.entries(stats.byType).map(([name, value]) => ({ name, value })) : [];
+    const pieData = stats ? Object.entries(stats.byType).map(([name, value]) => ({ name: t(name), value })) : [];
 
     return (
         <div className="p-4 text-base-content">
-            <h1 className="text-4xl font-bold mb-8">Statistics</h1>
+            <h1 className="text-4xl font-bold mb-8">{t('statistics')}</h1>
 
             <motion.div 
                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12"
@@ -61,10 +63,10 @@ const StatsPage = () => {
                 initial="hidden"
                 animate="visible"
             >
-                <StatCard title="Total Media" value={stats.totalMedia} color={THEME_COLORS.primary} />
-                <StatCard title="Read This Year" value={stats.readThisYear} color={THEME_COLORS.secondary} />
-                <StatCard title="In Wishlist" value={stats.byStatus.wishlist || 0} color={THEME_COLORS.accent} />
-                <StatCard title="Currently Lent" value={stats.byStatus.lent || 0} color={THEME_COLORS.yellow} />
+                <StatCard title={t('total_media')} value={stats.totalMedia} color={THEME_COLORS.primary} />
+                <StatCard title={t('read_this_year')} value={stats.readThisYear} color={THEME_COLORS.secondary} />
+                <StatCard title={t('in_wishlist')} value={stats.byStatus.wishlist || 0} color={THEME_COLORS.accent} />
+                <StatCard title={t('active_loans')} value={stats.byStatus.lent || 0} color={THEME_COLORS.yellow} />
             </motion.div>
 
             <motion.div 
@@ -73,7 +75,7 @@ const StatsPage = () => {
                 transition={{ duration: 0.5 }}
                 className="bg-neutral/50 backdrop-blur-lg p-6 rounded-lg border border-white/10"
             >
-                <h2 className="text-2xl font-bold mb-4">Media Distribution by Type</h2>
+                <h2 className="text-2xl font-bold mb-4">{t('media_distribution_by_type')}</h2>
                 <div style={{ width: '100%', height: 400 }}>
                     <ResponsiveContainer>
                         <PieChart>

@@ -4,6 +4,7 @@ import api from '../services/api';
 import CollectionFormModal from '../components/collections/CollectionFormModal';
 import { useToast } from '../context/ToastContext';
 import { FiPlus } from 'react-icons/fi';
+import { useTranslation } from 'react-i18next';
 
 const CollectionsPage = () => {
     const [collections, setCollections] = useState([]);
@@ -11,6 +12,7 @@ const CollectionsPage = () => {
     const [error, setError] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { addToast } = useToast();
+    const { t } = useTranslation();
 
     const fetchCollections = async () => {
         try {
@@ -45,10 +47,10 @@ const CollectionsPage = () => {
     return (
         <div className="p-4">
             <div className="flex justify-between items-center mb-8">
-                <h1 className="text-4xl font-bold">My Collections</h1>
+                <h1 className="text-4xl font-bold">{t('my_collections')}</h1>
                 <button onClick={() => setIsModalOpen(true)} className="btn btn-primary gap-2">
                     <FiPlus />
-                    Create New Collection
+                    {t('create_new_collection')}
                 </button>
             </div>
 
@@ -60,8 +62,8 @@ const CollectionsPage = () => {
 
             {collections.length === 0 ? (
                 <div className="text-center bg-base-100/50 backdrop-blur-lg p-12 rounded-lg shadow-md">
-                    <h2 className="text-2xl font-bold">No collections yet!</h2>
-                    <p className="text-base-content text-opacity-70 mt-2">Click "Create New Collection" to get started.</p>
+                    <h2 className="text-2xl font-bold">{t('no_collections_yet')}</h2>
+                    <p className="text-base-content text-opacity-70 mt-2">{t('create_new_collection_prompt')}</p>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -70,7 +72,7 @@ const CollectionsPage = () => {
                             <h3 className="text-2xl font-bold text-primary truncate">{collection.name}</h3>
                             <p className="text-base-content/70 mt-2 truncate">{collection.description || 'No description.'}</p>
                             <div className="mt-4 pt-4 border-t border-base-content/20 text-sm text-base-content/70">
-                                {collection.media_count || 0} {collection.media_count === 1 ? 'item' : 'items'}
+                                {t('item_count', { count: collection.media_count || 0 })}
                             </div>
                         </Link>
                     ))}

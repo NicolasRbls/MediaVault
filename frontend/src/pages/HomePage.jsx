@@ -3,6 +3,7 @@ import AuthContext from '../context/AuthContext';
 import api from '../services/api';
 import { motion } from 'framer-motion';
 import MediaCard from '../components/media/MediaCard';
+import { useTranslation } from 'react-i18next';
 
 const StatCard = ({ title, value, icon }) => (
     <motion.div 
@@ -19,6 +20,7 @@ const StatCard = ({ title, value, icon }) => (
 
 const HomePage = () => {
   const { user } = useContext(AuthContext);
+  const { t } = useTranslation();
   const [stats, setStats] = useState(null);
   const [recentMedia, setRecentMedia] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -44,8 +46,8 @@ const HomePage = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-4xl font-bold mb-4">Welcome back, <span className="text-gradient-primary">{user?.username}</span>!</h1>
-      <p className="text-base-content/70 mb-8">Here's a snapshot of your MediaVault.</p>
+      <h1 className="text-4xl font-bold mb-4">{t('welcome_message', { username: user?.username })}</h1>
+      <p className="text-base-content/70 mb-8">{t('app_snapshot')}</p>
 
       {loading ? (
         <div className="text-center"><span className="loading loading-spinner loading-lg"></span></div>
@@ -56,15 +58,15 @@ const HomePage = () => {
             initial="hidden"
             animate="visible"
         >
-            <StatCard title="Total Media" value={stats.totalMedia} icon="📚" />
-            <StatCard title="Read This Year" value={stats.readThisYear} icon="📖" />
-            <StatCard title="Active Loans" value={stats.byStatus.lent || 0} icon="🤝" />
-            <StatCard title="In Wishlist" value={stats.byStatus.wishlist || 0} icon="💡" />
+            <StatCard title={t('total_media')} value={stats.totalMedia} icon="📚" />
+            <StatCard title={t('read_this_year')} value={stats.readThisYear} icon="📖" />
+            <StatCard title={t('active_loans')} value={stats.byStatus.lent || 0} icon="🤝" />
+            <StatCard title={t('in_wishlist')} value={stats.byStatus.wishlist || 0} icon="💡" />
         </motion.div>
       )}
 
       <div className="mt-12">
-        <h2 className="text-3xl font-bold mb-4">Recently Added</h2>
+        <h2 className="text-3xl font-bold mb-4">{t('recently_added')}</h2>
         {!loading && recentMedia.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
                 {recentMedia.map(item => (
@@ -73,7 +75,7 @@ const HomePage = () => {
             </div>
         ) : (
             <div className="p-6 bg-base-200/50 backdrop-blur-lg rounded-lg text-center shadow-lg border border-white/10">
-                <p className="text-base-content/70">No media added recently. Add some to see them here!</p>
+                <p className="text-base-content/70">{t('no_media_recently')}</p>
             </div>
         )}
       </div>

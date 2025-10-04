@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../services/api';
 import { useToast } from '../../context/ToastContext';
+import { useTranslation } from 'react-i18next';
 
 const ProgressTracker = ({ mediaId, mediaType }) => {
     const [progress, setProgress] = useState({ current: '', total: '' });
     const { addToast } = useToast();
+    const { t } = useTranslation();
 
     const isTrackable = mediaType === 'book' || mediaType === 'series';
-    const currentLabel = mediaType === 'book' ? 'Current Page' : 'Current Episode';
-    const totalLabel = mediaType === 'book' ? 'Total Pages' : 'Total Episodes';
+    const currentLabel = mediaType === 'book' ? t('current_page') : t('current_episode');
+    const totalLabel = mediaType === 'book' ? t('total_pages') : t('total_episodes');
 
     useEffect(() => {
         if (isTrackable) {
@@ -44,7 +46,7 @@ const ProgressTracker = ({ mediaId, mediaType }) => {
 
     return (
         <div className="bg-base-200/30 backdrop-blur-lg p-6 rounded-lg border border-base-content/10 h-full">
-            <h3 className="text-2xl font-bold mb-4 text-base-content">Track Your Progress</h3>
+            <h3 className="text-2xl font-bold mb-4 text-base-content">{t('track_your_progress')}</h3>
             <div className="grid grid-cols-2 gap-4 mb-4">
                 <div className="form-control">
                     <label className="label"><span className="label-text">{currentLabel}</span></label>
@@ -67,7 +69,7 @@ const ProgressTracker = ({ mediaId, mediaType }) => {
             </div>
             <progress className="progress progress-primary w-full mb-4" value={percentage} max="100"></progress>
             <div className="text-right">
-                <button onClick={handleSaveProgress} className="btn btn-primary">Save Progress</button>
+                <button onClick={handleSaveProgress} className="btn btn-primary">{t('save_progress')}</button>
             </div>
         </div>
     );

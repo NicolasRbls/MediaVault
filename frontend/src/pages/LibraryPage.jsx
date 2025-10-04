@@ -6,6 +6,7 @@ import SkeletonCard from '../components/common/SkeletonCard';
 import { useToast } from '../context/ToastContext';
 import { motion } from 'framer-motion';
 import { FiPlus } from 'react-icons/fi';
+import { useTranslation } from 'react-i18next';
 
 const LibraryPage = () => {
     const [media, setMedia] = useState([]);
@@ -13,6 +14,7 @@ const LibraryPage = () => {
     const [error, setError] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { addToast } = useToast();
+    const { t } = useTranslation();
 
     const fetchMedia = async () => {
         try {
@@ -67,13 +69,13 @@ const LibraryPage = () => {
     return (
         <div className="p-4">
             <div className="flex justify-between items-center mb-8">
-                <h1 className="text-4xl font-bold">My Library</h1>
+                <h1 className="text-4xl font-bold">{t('library')}</h1>
                 <button 
                     onClick={() => setIsModalOpen(true)}
                     className="btn btn-primary gap-2"
                 >
                     <FiPlus />
-                    Add New Media
+                    {t('add_new_media')}
                 </button>
             </div>
 
@@ -96,8 +98,8 @@ const LibraryPage = () => {
                 <div className="text-center p-8 text-error">{error}</div>
             ) : media.length === 0 ? (
                 <div className="text-center bg-base-100/50 backdrop-blur-lg p-12 rounded-lg shadow-md">
-                    <h2 className="text-2xl font-bold">Your library is empty!</h2>
-                    <p className="text-base-content text-opacity-70 mt-2">Click "Add New Media" to start building your collection.</p>
+                    <h2 className="text-2xl font-bold">{t('your_library_is_empty')}</h2>
+                    <p className="text-base-content text-opacity-70 mt-2">{t('add_new_media_prompt')}</p>
                 </div>
             ) : (
                 <motion.div 

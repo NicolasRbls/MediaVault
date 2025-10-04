@@ -3,11 +3,13 @@ import api from '../services/api';
 import MediaCard from '../components/media/MediaCard';
 import SkeletonCard from '../components/common/SkeletonCard';
 import { useToast } from '../context/ToastContext';
+import { useTranslation } from 'react-i18next';
 
 const WishlistPage = () => {
     const [wishlist, setWishlist] = useState([]);
     const [loading, setLoading] = useState(true);
     const { addToast } = useToast();
+    const { t } = useTranslation();
 
     const fetchWishlist = async () => {
         try {
@@ -44,14 +46,14 @@ const WishlistPage = () => {
 
     return (
         <div className="p-4">
-            <h1 className="text-4xl font-bold mb-8">My Wishlist</h1>
+            <h1 className="text-4xl font-bold mb-8">{t('my_wishlist')}</h1>
 
             {loading ? (
                 renderSkeletons()
             ) : wishlist.length === 0 ? (
                 <div className="text-center bg-dark-alt p-12 rounded-lg shadow-md">
-                    <h2 className="text-2xl font-bold">Your wishlist is empty!</h2>
-                    <p className="text-gray-text mt-2">You can add items to your wishlist from the library or when creating a new item.</p>
+                    <h2 className="text-2xl font-bold">{t('wishlist_is_empty')}</h2>
+                    <p className="text-gray-text mt-2">{t('add_to_wishlist_prompt')}</p>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">

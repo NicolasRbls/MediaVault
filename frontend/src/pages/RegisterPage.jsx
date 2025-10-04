@@ -4,6 +4,8 @@ import AuthContext from '../context/AuthContext';
 import { FiAlertCircle } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import ThemeToggle from '../components/common/ThemeToggle';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from '../components/common/LanguageSwitcher';
 
 const RegisterPage = () => {
     const [username, setUsername] = useState('');
@@ -13,6 +15,7 @@ const RegisterPage = () => {
     const { register } = useContext(AuthContext);
     const navigate = useNavigate();
     const cardRef = useRef(null);
+    const { t } = useTranslation();
 
     const handleMouseMove = (e) => {
         if (!cardRef.current) return;
@@ -36,7 +39,10 @@ const RegisterPage = () => {
 
     return (
         <div className="min-h-screen w-full flex items-center justify-center p-4">
-            <ThemeToggle className="absolute top-4 right-4 z-50" />
+            <div className="absolute top-4 right-4 z-50 flex items-center gap-2">
+                <LanguageSwitcher />
+                <ThemeToggle />
+            </div>
             <div className="absolute top-0 left-0 p-6">
                 <h1 className="text-2xl font-bold text-base-content">MediaVault</h1>
             </div>
@@ -51,7 +57,7 @@ const RegisterPage = () => {
                     className="card-aurora card w-full max-w-md bg-base-200/30 backdrop-blur-xl shadow-2xl border border-base-content/10"
                 >
                     <div className="card-body">
-                        <h2 className="card-title text-3xl justify-center mb-4">Register</h2>
+                        <h2 className="card-title text-3xl justify-center mb-4">{t('register')}</h2>
                         
                         {error && (
                             <div role="alert" className="alert alert-error"><FiAlertCircle /><span>{error}</span></div>
@@ -59,23 +65,23 @@ const RegisterPage = () => {
 
                         <form onSubmit={handleSubmit}>
                             <div className="form-control">
-                                <label className="label"><span className="label-text">Username</span></label>
+                                <label className="label"><span className="label-text">{t('username')}</span></label>
                                 <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required className="input input-bordered w-full bg-base-200/50" />
                             </div>
                             <div className="form-control mt-4">
-                                <label className="label"><span className="label-text">Email</span></label>
+                                <label className="label"><span className="label-text">{t('email')}</span></label>
                                 <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required className="input input-bordered w-full bg-base-200/50" />
                             </div>
                             <div className="form-control mt-4">
-                                <label className="label"><span className="label-text">Password</span></label>
+                                <label className="label"><span className="label-text">{t('password')}</span></label>
                                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required className="input input-bordered w-full bg-base-200/50" />
                             </div>
                             <div className="form-control mt-6">
-                                <button type="submit" className="btn btn-primary w-full">Register</button>
+                                <button type="submit" className="btn btn-primary w-full">{t('register')}</button>
                             </div>
                         </form>
                         <p className="mt-4 text-center text-sm">
-                            Already have an account? <Link to="/login" className="link link-secondary">Login here</Link>
+                            {t('already_have_account')} <Link to="/login" className="link link-secondary">{t('login_here')}</Link>
                         </p>
                     </div>
                 </div>

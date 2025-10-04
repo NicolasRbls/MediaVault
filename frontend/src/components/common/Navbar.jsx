@@ -4,6 +4,8 @@ import AuthContext from '../../context/AuthContext';
 import { FiMenu, FiLogOut, FiLogIn, FiUserPlus, FiSun, FiMoon } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { ThemeContext } from '../../context/ThemeContext';
+import LanguageSwitcher from './LanguageSwitcher';
+import { useTranslation } from 'react-i18next';
 
 const NavItem = ({ children }) => (
     <motion.li whileHover={{ scale: 1.1, y: -2 }} whileTap={{ scale: 0.95 }}>
@@ -15,6 +17,7 @@ const Navbar = () => {
     const { user, logout } = useContext(AuthContext);
     const { theme, toggleTheme } = useContext(ThemeContext);
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const handleLogout = () => {
         logout();
@@ -23,11 +26,11 @@ const Navbar = () => {
 
     const navLinks = (
         <>
-            <NavItem><Link to="/library">Library</Link></NavItem>
-            <NavItem><Link to="/collections">Collections</Link></NavItem>
-            <NavItem><Link to="/loans">Loans</Link></NavItem>
-            <NavItem><Link to="/wishlist">Wishlist</Link></NavItem>
-            <NavItem><Link to="/stats">Stats</Link></NavItem>
+            <NavItem><Link to="/library">{t('library')}</Link></NavItem>
+            <NavItem><Link to="/collections">{t('collections')}</Link></NavItem>
+            <NavItem><Link to="/loans">{t('loans')}</Link></NavItem>
+            <NavItem><Link to="/wishlist">{t('wishlist')}</Link></NavItem>
+            <NavItem><Link to="/stats">{t('stats')}</Link></NavItem>
         </>
     );
 
@@ -56,15 +59,16 @@ const Navbar = () => {
                 )}
             </div>
             <div className="navbar-end gap-2">
+                <LanguageSwitcher />
                 <button onClick={toggleTheme} className="btn btn-ghost btn-circle">
                     {theme === 'light' ? <FiMoon className="h-5 w-5" /> : <FiSun className="h-5 w-5" />}
                 </button>
                 {user ? (
-                    <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={handleLogout} className="btn btn-primary gap-2"><FiLogOut /> Logout</motion.button>
+                    <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={handleLogout} className="btn btn-primary gap-2"><FiLogOut /> {t('logout')}</motion.button>
                 ) : (
                     <div className="flex items-center gap-2">
-                        <Link to="/login" className="btn btn-ghost gap-2"><FiLogIn /> Login</Link>
-                        <Link to="/register" className="btn btn-primary gap-2"><FiUserPlus /> Register</Link>
+                        <Link to="/login" className="btn btn-ghost gap-2"><FiLogIn /> {t('login')}</Link>
+                        <Link to="/register" className="btn btn-primary gap-2"><FiUserPlus /> {t('register')}</Link>
                     </div>
                 )}
             </div>

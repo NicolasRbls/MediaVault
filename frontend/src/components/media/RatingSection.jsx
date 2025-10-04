@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import api from '../../services/api';
 import { useToast } from '../../context/ToastContext';
 import StarRating from '../common/StarRating';
+import { useTranslation } from 'react-i18next';
 
 const RatingSection = ({ mediaId }) => {
     const [rating, setRating] = useState(null);
     const [review, setReview] = useState('');
     const [finishedDate, setFinishedDate] = useState('');
     const { addToast } = useToast();
+    const { t } = useTranslation();
 
     useEffect(() => {
         api.get(`/media/${mediaId}/ratings`)
@@ -53,23 +55,23 @@ const RatingSection = ({ mediaId }) => {
 
     return (
         <div className="bg-base-200/30 backdrop-blur-lg p-6 rounded-lg border border-base-content/10 h-full">
-            <h3 className="text-2xl font-bold mb-4 text-base-content">Your Review</h3>
+            <h3 className="text-2xl font-bold mb-4 text-base-content">{t('your_review')}</h3>
             <div className="mb-4">
-                <p className="label-text mb-2">Your Rating</p>
+                <p className="label-text mb-2">{t('your_rating')}</p>
                 <StarRating rating={rating} onRatingChange={setRating} />
             </div>
             <div className="form-control mb-4">
-                <label className="label"><span className="label-text">Review</span></label>
+                <label className="label"><span className="label-text">{t('review')}</span></label>
                 <textarea 
                     value={review}
                     onChange={(e) => setReview(e.target.value)}
                     rows="4"
                     className="textarea textarea-bordered w-full bg-base-200/50"
-                    placeholder="What did you think?"
+                    placeholder={t('what_did_you_think')}
                 ></textarea>
             </div>
             <div className="form-control mb-4">
-                <label className="label"><span className="label-text">Date Finished</span></label>
+                <label className="label"><span className="label-text">{t('date_finished')}</span></label>
                 <input 
                     type="date" 
                     value={finishedDate}
@@ -78,9 +80,9 @@ const RatingSection = ({ mediaId }) => {
                 />
             </div>
             <div className="flex items-center justify-between">
-                <button onClick={handleSaveRating} className="btn btn-primary">Save Review</button>
+                <button onClick={handleSaveRating} className="btn btn-primary">{t('save_review')}</button>
                 {rating && (
-                    <button onClick={handleDeleteRating} className="btn btn-ghost btn-sm text-error">Delete Review</button>
+                    <button onClick={handleDeleteRating} className="btn btn-ghost btn-sm text-error">{t('delete_review')}</button>
                 )}
             </div>
         </div>
