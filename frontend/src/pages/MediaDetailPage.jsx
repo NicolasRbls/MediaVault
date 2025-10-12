@@ -88,8 +88,7 @@ const MediaDetailPage = () => {
     if (!media) return null;
 
     const placeholderImage = `https://via.placeholder.com/400x600/0D0D1A/8A2BE2?text=${encodeURIComponent(media.title)}`;
-    const API_URL = 'http://localhost:5000';
-    const imageUrl = media.cover_image ? `${API_URL}${media.cover_image}` : placeholderImage;
+    const imageUrl = media.cover_image ? media.cover_image : placeholderImage;
 
     return (
         <div className="p-4 text-base-content">

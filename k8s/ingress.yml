@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mediavault-ingress
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: mediavault-backend-service
+                port:
+                  number: 5000
+          - path: /uploads
+            pathType: Prefix
+            backend:
+              service:
+                name: mediavault-backend-service
+                port:
+                  number: 5000
+          - path: /admin
+            pathType: Prefix
+            backend:
+              service:
+                name: mediavault-backoffice-service
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: mediavault-frontend-service
+                port:
+                  number: 80

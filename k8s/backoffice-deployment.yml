@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mediavault-backoffice-deployment
+  labels:
+    app: mediavault-backoffice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mediavault-backoffice
+  template:
+    metadata:
+      labels:
+        app: mediavault-backoffice
+    spec:
+      containers:
+        - name: mediavault-backoffice
+          image: oxow/mediavault-backoffice:1.0.6
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80

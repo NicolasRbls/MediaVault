@@ -3,15 +3,13 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
-const API_URL = 'http://localhost:5000';
-
 const MediaCard = ({ media }) => {
     const { id, title, author_creator, cover_image, type } = media;
     const cardRef = useRef(null);
     const { t } = useTranslation();
 
     const placeholderImage = `https://via.placeholder.com/300x450/0D0D1A/8A2BE2?text=${encodeURIComponent(title)}`;
-    const imageUrl = cover_image ? `${API_URL}${cover_image}` : placeholderImage;
+    const imageUrl = cover_image ? cover_image : placeholderImage;
 
     const handleMouseMove = (e) => {
         const rect = cardRef.current.getBoundingClientRect();

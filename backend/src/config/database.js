@@ -2,7 +2,7 @@ const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
 const path = require('path');
 
-const dbPath = path.resolve(__dirname, '../../mediavault.db');
+const dbPath = process.env.DATABASE_PATH || path.resolve(__dirname, '../../mediavault.db');
 const schemaPath = path.resolve(__dirname, '../models/database.sql');
 
 // Connect to the database

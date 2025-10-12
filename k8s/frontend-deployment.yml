@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mediavault-frontend-deployment
+  labels:
+    app: mediavault-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mediavault-frontend
+  template:
+    metadata:
+      labels:
+        app: mediavault-frontend
+    spec:
+      containers:
+        - name: mediavault-frontend
+          image: oxow/mediavault-frontend:1.0.6
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80

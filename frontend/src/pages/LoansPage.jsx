@@ -5,8 +5,6 @@ import LoanFormModal from '../components/loans/LoanFormModal';
 import { FiPlus } from 'react-icons/fi';
 import { useTranslation } from 'react-i18next';
 
-const API_URL = 'http://localhost:5000';
-
 const LoansPage = () => {
     const [activeLoans, setActiveLoans] = useState([]);
     const [loanHistory, setLoanHistory] = useState([]);
@@ -60,7 +58,7 @@ const LoansPage = () => {
 
     const LoanRow = ({ loan, isHistory = false }) => {
         const placeholderImage = `https://via.placeholder.com/64x64/0D0D1A/8A2BE2?text=${encodeURIComponent(loan.title.charAt(0))}`;
-        const imageUrl = loan.cover_image ? `${API_URL}${loan.cover_image}` : placeholderImage;
+        const imageUrl = loan.cover_image ? loan.cover_image : placeholderImage;
 
         return (
             <div className="bg-base-200 p-4 rounded-lg flex items-center justify-between flex-wrap gap-4 shadow-md border border-white/10">
