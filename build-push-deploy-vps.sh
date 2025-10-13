@@ -62,7 +62,7 @@ echo "
 
 # Sur un serveur K3s, 'k3s kubectl' est la commande la plus explicite.
 # Nous l'utilisons pour garantir la compatibilité.
-k3s kubectl apply -f k8s/
+sudo k3s kubectl apply -f k8s/
 
 echo "
 ✅ Déploiement réussi !"
