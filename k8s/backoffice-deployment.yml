@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: mediavault-backoffice
-          image: oxow/mediavault-backoffice:1.0.6
+          image: oxow/mediavault-backoffice:1.0.17
           imagePullPolicy: Always
           ports:
             - containerPort: 80

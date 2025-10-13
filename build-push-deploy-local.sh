@@ -5,7 +5,7 @@ set -e
 
 # --- Configuration ---
 # The version for your Docker images. 
-VERSION="1.0.7"
+VERSION="1.0.17"
 
 # Your Docker Hub username
 DOCKER_HUB_USERNAME="oxow"

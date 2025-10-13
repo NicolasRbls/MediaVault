@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: mediavault-backend
-          image: oxow/mediavault-backend:1.0.6
+          image: oxow/mediavault-backend:1.0.17
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
@@ -26,11 +26,12 @@ spec:
                 secretKeyRef:
                   name: mediavault-backend-secret
                   key: JWT_SECRET
-            - name: UPLOAD_DIR
-              value: /tmp/uploads
           volumeMounts:
             - mountPath: /var/data
               name: mediavault-db-storage
+            - mountPath: /usr/src/app/uploads
+              name: mediavault-db-storage
+              subPath: uploads
       volumes:
         - name: mediavault-db-storage
           persistentVolumeClaim:

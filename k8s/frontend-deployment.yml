@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: mediavault-frontend
-          image: oxow/mediavault-frontend:1.0.6
+          image: oxow/mediavault-frontend:1.0.17
           imagePullPolicy: Always
           ports:
             - containerPort: 80

@@ -79,14 +79,14 @@ const HomePage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   <StatCard title={t('total_media')} value={stats.totalMedia} icon="📚" />
                   <StatCard title={t('read_this_year')} value={stats.readThisYear} icon="📖" />
-                  <StatCard title={t('active_loans')} value={stats.byStatus.lent || 0} icon="🤝" />
-                  <StatCard title={t('in_wishlist')} value={stats.byStatus.wishlist || 0} icon="💡" />
+                  <StatCard title={t('active_loans')} value={stats.byStatus?.lent || 0} icon="🤝" />
+                  <StatCard title={t('in_wishlist')} value={stats.byStatus?.wishlist || 0} icon="💡" />
               </div>
             )}
 
             <div className="mt-12">
               <h2 className="text-3xl font-bold mb-4">{t('recently_added')}</h2>
-              {recentMedia.length > 0 ? (
+              {Array.isArray(recentMedia) && recentMedia.length > 0 ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
                       {recentMedia.map(item => (
                           <MediaCard key={item.id} media={item} />
