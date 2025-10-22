@@ -287,9 +287,15 @@ Voici une liste détaillée des endpoints de l'API disponibles, groupés par res
 | `PUT`   | `/users/:id`     | Mettre à jour le rôle d'un utilisateur.      |
 | `DELETE`| `/users/:id`     | Supprimer un utilisateur.                    |
 | `GET`   | `/stats`         | Obtenir les statistiques globales du système.|
-| `GET`   | `/media`         | Obtenir tous les médias du système.          |
+| `GET`   | `/media`         | Obtenir tous les médias du système. Peut être filtré par `collection_id`.|
 | `PUT`   | `/media/:id`     | Mettre à jour n'importe quel média.          |
 | `DELETE`| `/media/:id`     | Supprimer n'importe quel média.              |
+| `GET`   | `/collections`   | Obtenir toutes les collections.              |
+| `PUT`   | `/collections/:id` | Mettre à jour une collection.                |
+| `DELETE`| `/collections/:id` | Supprimer une collection.                    |
+| `GET`   | `/loans`         | Obtenir tous les prêts.                      |
+| `PUT`   | `/loans/:id`     | Mettre à jour un prêt.                       |
+| `DELETE`| `/loans/:id`     | Supprimer un prêt.                           |
 
 ---
 
@@ -307,4 +313,4 @@ Les contributions sont ce qui rend la communauté open-source un endroit incroya
 
 ## Licence
 
-Distribué sous la licence MIT. Voir `LICENSE` pour plus d'informations.
+Distribué sous la licence MIT.
