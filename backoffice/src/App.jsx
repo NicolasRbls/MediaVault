@@ -4,6 +4,9 @@ import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import UsersPage from './pages/UsersPage';
 import MediaPage from './pages/MediaPage';
+import CollectionsPage from './pages/CollectionsPage';
+import CollectionMediaPage from './pages/CollectionMediaPage';
+import LoansPage from './pages/LoansPage';
 import SettingsPage from './pages/SettingsPage';
 import Layout from './components/common/Layout';
 
@@ -22,6 +25,9 @@ function App() {
           <Route path="/" element={<DashboardPage />} />
           <Route path="/users" element={<UsersPage />} />
           <Route path="/media" element={<MediaPage />} />
+          <Route path="/collections" element={<CollectionsPage />} />
+          <Route path="/collections/:collectionId/media" element={<CollectionMediaPage />} />
+          <Route path="/loans" element={<LoansPage />} />
           <Route path="/settings" element={<SettingsPage />} />
         </Route>
       </Routes>

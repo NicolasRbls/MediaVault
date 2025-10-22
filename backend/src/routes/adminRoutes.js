@@ -7,7 +7,13 @@ const {
     deleteUser, 
     getAllMedia,
     updateMedia,
-    deleteMedia
+    deleteMedia,
+    getAllCollections,
+    updateCollection,
+    deleteCollection,
+    getAllLoans,
+    updateLoan,
+    deleteLoan
 } = require('../controllers/adminController');
 const adminAuth = require('../middleware/adminAuth');
 
@@ -23,5 +29,15 @@ router.get('/stats', adminAuth, getSystemStats);
 router.get('/media', adminAuth, getAllMedia);
 router.put('/media/:id', adminAuth, updateMedia);
 router.delete('/media/:id', adminAuth, deleteMedia);
+
+// Collection Management
+router.get('/collections', adminAuth, getAllCollections);
+router.put('/collections/:id', adminAuth, updateCollection);
+router.delete('/collections/:id', adminAuth, deleteCollection);
+
+// Loan Management
+router.get('/loans', adminAuth, getAllLoans);
+router.put('/loans/:id', adminAuth, updateLoan);
+router.delete('/loans/:id', adminAuth, deleteLoan);
 
 module.exports = router;
