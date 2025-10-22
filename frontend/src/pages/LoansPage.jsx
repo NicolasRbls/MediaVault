@@ -57,13 +57,14 @@ const LoansPage = () => {
     };
 
     const LoanRow = ({ loan, isHistory = false }) => {
-        const placeholderImage = `https://via.placeholder.com/64x64/0D0D1A/8A2BE2?text=${encodeURIComponent(loan.title.charAt(0))}`;
-        const imageUrl = loan.cover_image ? loan.cover_image : placeholderImage;
+        const API_BASE_URL = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace('/api', '') : 'http://localhost:5000';
+        const localPlaceholderImage = '/placeholder.svg'; // Path to your local placeholder
+        const imageUrl = loan.cover_image ? `${API_BASE_URL}${loan.cover_image}` : localPlaceholderImage;
 
         return (
             <div className="bg-base-200 p-4 rounded-lg flex items-center justify-between flex-wrap gap-4 shadow-md border border-white/10">
                 <div className="flex items-center">
-                    <img src={imageUrl} alt={loan.title} className="w-16 h-16 rounded-md object-cover mr-4" onError={(e) => { e.target.onerror = null; e.target.src = placeholderImage; }} />
+                    <img src={imageUrl} alt={loan.title} className="w-16 h-16 rounded-md object-cover mr-4" onError={(e) => { e.target.onerror = null; e.target.src = localPlaceholderImage; }} />
                     <div>
                         <p className="font-bold text-lg text-base-content">{loan.title}</p>
                         <p className="text-sm text-base-content/70">{t('lent_to')} <span className="font-semibold">{loan.borrower_name}</span></p>

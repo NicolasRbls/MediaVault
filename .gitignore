@@ -33,3 +33,4 @@ Thumbs.db
 # User uploaded content
 /backend/uploads/*
 !/backend/uploads/.gitkeep
+Note_MAJ_Correc.txt
