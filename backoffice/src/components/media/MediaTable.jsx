@@ -109,6 +109,7 @@ const MediaTable = () => {
                                     <th>ID</th>
                                     <th>Titre</th>
                                     <th>Type</th>
+                                    <th>Statut</th>
                                     <th>Auteur/Créateur</th>
                                     <th>Propriétaire</th>
                                     <th>Actions</th>
@@ -120,6 +121,7 @@ const MediaTable = () => {
                                         <th>{item.id}</th>
                                         <td>{item.title}</td>
                                         <td><span className="badge badge-neutral">{item.type}</span></td>
+                                        <td><span className="badge badge-info badge-outline">{item.status}</span></td>
                                         <td>{item.author_creator}</td>
                                         <td>{item.owner_username}</td>
                                         <td className="flex gap-2">
