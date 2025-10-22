@@ -87,8 +87,10 @@ const MediaDetailPage = () => {
     if (error) return <div className="text-center p-8 text-error">{error}</div>;
     if (!media) return null;
 
-    const placeholderImage = `https://via.placeholder.com/400x600/0D0D1A/8A2BE2?text=${encodeURIComponent(media.title)}`;
-    const imageUrl = media.cover_image ? media.cover_image : placeholderImage;
+    const API_BASE_URL = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace('/api', '') : 'http://localhost:5000';
+    const localPlaceholderImage = '/placeholder.svg'; // Path to your local placeholder
+
+    const imageUrl = media.cover_image ? `${API_BASE_URL}${media.cover_image}` : localPlaceholderImage;
 
     return (
         <div className="p-4 text-base-content">
@@ -100,7 +102,7 @@ const MediaDetailPage = () => {
                         src={imageUrl} 
                         alt={`Cover for ${media.title}`}
                         className="w-full max-w-sm rounded-lg shadow-2xl border-2 border-white/10 object-cover"
-                        onError={(e) => { e.target.onerror = null; e.target.src = placeholderImage; }}
+                        onError={(e) => { e.target.onerror = null; e.target.src = localPlaceholderImage; }}
                     />
                     <div className="mt-6 flex flex-wrap justify-center gap-4">
                         <button onClick={() => setIsEditModalOpen(true)} className="btn btn-primary btn-outline gap-2"><FiEdit /> {t('edit')}</button>
