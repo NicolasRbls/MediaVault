@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAdminAuth } from '../context/AuthContext';
 import { useNavigate, Navigate } from 'react-router-dom';
+import ThemeToggle from '../components/common/ThemeToggle';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
@@ -26,7 +27,10 @@ const LoginPage = () => {
     }
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-base-200">
+        <div className="relative flex items-center justify-center min-h-screen bg-base-200">
+            <div className="absolute top-4 right-4">
+                <ThemeToggle />
+            </div>
             <div className="w-full max-w-md p-8 space-y-8 bg-base-100 rounded-lg shadow-lg">
                 <div className="text-center">
                     <h1 className="text-3xl font-bold text-base-content">Back Office</h1>
