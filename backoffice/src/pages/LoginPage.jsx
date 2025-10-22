@@ -26,11 +26,11 @@ const LoginPage = () => {
     }
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
-            <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg dark:bg-gray-800">
+        <div className="flex items-center justify-center min-h-screen bg-base-200">
+            <div className="w-full max-w-md p-8 space-y-8 bg-base-100 rounded-lg shadow-lg">
                 <div className="text-center">
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Back Office</h1>
-                    <p className="mt-2 text-gray-600 dark:text-gray-400">Connectez-vous à votre panneau d'administration</p>
+                    <h1 className="text-3xl font-bold text-base-content">Back Office</h1>
+                    <p className="mt-2 text-base-content/80">Connectez-vous à votre panneau d'administration</p>
                 </div>
                 <form className="space-y-6" onSubmit={handleSubmit}>
                     <div className="relative">
@@ -39,7 +39,7 @@ const LoginPage = () => {
                             id="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-full px-4 py-2 text-gray-900 bg-gray-200 border-transparent rounded-md focus:border-blue-500 focus:bg-white focus:ring-0 dark:bg-gray-700 dark:text-white"
+                            className="w-full px-4 py-2 text-base-content bg-base-300 border-transparent rounded-md focus:border-primary focus:bg-base-100 focus:ring-0"
                             placeholder="Email"
                             required
                         />
@@ -50,7 +50,7 @@ const LoginPage = () => {
                             id="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full px-4 py-2 text-gray-900 bg-gray-200 border-transparent rounded-md focus:border-blue-500 focus:bg-white focus:ring-0 dark:bg-gray-700 dark:text-white"
+                            className="w-full px-4 py-2 text-base-content bg-base-300 border-transparent rounded-md focus:border-primary focus:bg-base-100 focus:ring-0"
                             placeholder="Mot de passe"
                             required
                         />
@@ -59,13 +59,13 @@ const LoginPage = () => {
                         <button 
                             type="submit" 
                             disabled={loading}
-                            className="w-full px-4 py-2 font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+                            className="w-full px-4 py-2 font-semibold text-white btn btn-primary rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50"
                         >
                             {loading ? 'Connexion...' : 'Se connecter'}
                         </button>
                     </div>
                 </form>
-                {error && <p className="mt-4 text-sm text-center text-red-600 dark:text-red-400">{error}</p>}
+                {error && <p className="mt-4 text-sm text-center text-error">{error}</p>}
             </div>
         </div>
     );
